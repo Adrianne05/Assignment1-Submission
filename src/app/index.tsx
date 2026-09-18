@@ -1,98 +1,168 @@
-import * as Device from 'expo-device';
-import { Platform, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { Alert, Pressable, Image, StyleSheet, Text, View } from "react-native";
+import comment from "../../assets/images/comment-icon.png";
+import poster from "../../assets/images/gojo.jpg";
+import heart from "../../assets/images/heart.png";
+import icon from "../../assets/images/left-arrow-icon.png";
+import save from "../../assets/images/save-icon.png";
+import send from "../../assets/images/send-icon.png";
 
-import { AnimatedIcon } from '@/components/animated-icon';
-import { HintRow } from '@/components/hint-row';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
-
-function getDevMenuHint() {
-  if (Platform.OS === 'web') {
-    return <ThemedText type="small">use browser devtools</ThemedText>;
-  }
-  if (Device.isDevice) {
-    return (
-      <ThemedText type="small">
-        shake device or press <ThemedText type="code">m</ThemedText> in terminal
-      </ThemedText>
-    );
-  }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
+export default function Index() {
+  const alertPress = () => {
+    Alert.alert("Alert Button pressed");
+  };
   return (
-    <ThemedText type="small">
-      press <ThemedText type="code">{shortcut}</ThemedText>
-    </ThemedText>
-  );
-}
+    <>
+      <View style={styles.container}>
+        <Text style={styles.header}>OOTD_EVERYDAY</Text>
+        <Text style={styles.post}>Posts</Text>
+        <View style={styles.border}></View>
+      </View>
+      <Image source={icon} style={styles.icon} resizeMode="cover" />
 
-export default function HomeScreen() {
-  return (
-    <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-        <ThemedView style={styles.heroSection}>
-          <AnimatedIcon />
-          <ThemedText type="title" style={styles.title}>
-            Welcome to&nbsp;Expo
-          </ThemedText>
-        </ThemedView>
+      <View style={styles.before_img}>
+        <View>
+          <Image source={poster} style={styles.pfp} resizeMode="cover" />
+        </View>
+        <View>
+          <Text style={styles.user}>ootd_everyday</Text>
+          <Text style={styles.user2}>via franchise_fry39</Text>
+        </View>
+      </View>
 
-        <ThemedText type="code" style={styles.code}>
-          get started
-        </ThemedText>
+      <View style={styles.main}>
+        <Image source={poster} style={styles.poster} resizeMode="cover" />
+      </View>
+      <View style={styles.icons}>
+        <View style={styles.leftIcons}>
+          <Image source={heart} style={styles.heart} resizeMode="cover" />
+          <Image source={comment} style={styles.comment} resizeMode="cover" />
+          <Image source={send} style={styles.send} resizeMode="cover" />
+        </View>
+        <View>
+          <Image source={save} style={styles.save} resizeMode="cover" />
+        </View>
+      </View>
 
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title="Try editing"
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
-          />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
-          <HintRow
-            title="Fresh start"
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-          />
-        </ThemedView>
-
-        {Platform.OS === 'web' && <WebBadge />}
-      </SafeAreaView>
-    </ThemedView>
+      <Pressable
+        onPress={alertPress}
+        style={({ pressed }) => [
+          styles.button,
+          pressed && styles.buttonPressed,
+        ]}
+      >
+        <Text style={styles.buttonText}>Alert</Text>
+      </Pressable>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
+    alignItems: "center",
+    justifyContent: "flex-start",
   },
-  safeArea: {
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    alignItems: 'center',
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
-    maxWidth: MaxContentWidth,
+
+  header: {
+    color: "#868787",
   },
-  heroSection: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
+
+  post: {
+    fontWeight: "bold",
+    fontSize: 16,
   },
-  title: {
-    textAlign: 'center',
+
+  border: {
+    borderWidth: 1,
+    borderColor: "#868787",
+    borderStyle: "solid",
+    marginTop: 5,
+    width: "100%",
   },
-  code: {
-    textTransform: 'uppercase',
+
+  before_img: {
+    flexDirection: "row",
   },
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
+
+  pfp: {
+    width: 40,
+    height: 40,
+    borderRadius: 40,
+    marginTop: 3,
+    marginLeft: 3,
+  },
+
+  user: {
+    fontWeight: "bold",
+    marginHorizontal: 10,
+    marginTop: 10,
+  },
+
+  user2: {
+    marginHorizontal: 10,
+    fontSize: 12,
+  },
+
+  poster: {
+    width: 390,
+    height: 400,
+    alignItems: "center",
+  },
+
+  icon: {
+    width: 75,
+    height: 25,
+    position: "absolute",
+    top: 10,
+  },
+
+  main: {
+    alignItems: "center",
+  },
+
+  icons: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+
+  leftIcons: {
+    flexDirection: "row",
+    gap: 12,
+  },
+
+  heart: {
+    width: 30,
+    height: 30,
+    alignItems: "flex-end",
+  },
+
+  comment: {
+    width: 30,
+    height: 30,
+    alignItems: "flex-end",
+  },
+
+  send: {
+    width: 30,
+    height: 30,
+    alignItems: "flex-end",
+  },
+
+  save: {
+    width: 20,
+    height: 20,
+  },
+
+  button: {
+    borderRadius: 8,
+    padding: 12,
+    alignItems: "flex-start",
+    marginHorizontal: 20,
+    marginTop: 20,
+    marginBottom: 20,
+  },
+
+  buttonPressed: {
+    backgroundColor: "#0066cc"
   },
 });
